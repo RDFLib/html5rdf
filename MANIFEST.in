@@ -1,4 +1,4 @@
-include LICENSE
+include LICENSE html5rdf/contrib/webencodings/LiCENSE
 include AUTHORS.rst
 include CHANGES.rst
 include README.rst
