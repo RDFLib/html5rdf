@@ -1135,7 +1135,7 @@ class HTMLTokenizer:
                     break
             if matched:
                 self.currentToken = {"type": tokenTypes["Doctype"],
-                                     "name": "",
+                                     "name": None,
                                      "publicId": None, "systemId": None,
                                      "correct": True}
                 self.state = self.doctypeState
@@ -1702,6 +1702,7 @@ class HTMLTokenizer:
         return True
 
     def cdataSectionState(self):
+        rewrite_nulls = False
         data = []
         while True:
             data.append(self.stream.charsUntil("]"))
@@ -1724,7 +1725,8 @@ class HTMLTokenizer:
             for _ in range(nullCount):
                 self.tokenQueue.append({"type": tokenTypes["ParseError"],
                                         "data": "invalid-codepoint"})
-            data = data.replace("\u0000", "\uFFFD")
+            if rewrite_nulls:
+                data = data.replace("\u0000", "\uFFFD")
         if data:
             self.tokenQueue.append({"type": tokenTypes["Characters"],
                                     "data": data})

@@ -87,7 +87,7 @@ with open(join(here, "html5rdf", "__init__.py"), "rb") as init_file:
         if (len(a.targets) == 1 and
                 isinstance(a.targets[0], ast.Name) and
                 a.targets[0].id == "__version__" and
-                isinstance(a.value, ast.Str)):
+                isinstance(a.value, ast.Constant)):
             version = a.value.s
 
 setup(name='html5rdf',

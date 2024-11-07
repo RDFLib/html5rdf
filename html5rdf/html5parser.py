@@ -486,6 +486,9 @@ class InitialPhase(Phase):
                 systemId is not None and systemId != "about:legacy-compat"):
             self.parser.parseError("unknown-doctype")
 
+        if name is None:
+            name = token["name"] = ""
+
         if publicId is None:
             publicId = ""
 

@@ -199,7 +199,9 @@ class TreeWalkerTest(pytest.Item):
     def repr_failure(self, excinfo: "pytest._code.code.ExceptionInfo[BaseException]", *args):
         traceback = excinfo.traceback
         ntraceback = traceback.cut(path=__file__)
-        excinfo.traceback = ntraceback.filter(excinfo)
+        pytest_ver = getattr(pytest, "version_tuple", ())
+        filter_args = (excinfo,) if pytest_ver >= (7, 4, 0) else ()
+        excinfo.traceback = ntraceback.filter(*filter_args)
 
         return excinfo.getrepr(funcargs=True,
                                showlocals=False,
