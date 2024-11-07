@@ -7,7 +7,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # 2.7 and 3.7 run on Windows via AppVeyor
         python: ["3.8", "3.9", "3.10", "3.11", "3.12"]
         os: [ubuntu-latest, windows-latest]
         deps: [base, optional]
@@ -15,9 +14,6 @@ jobs:
           - python: "pypy-3.10"
             os: ubuntu-latest
             deps: base
-          - python: "3.8"
-            os: ubuntu-latest
-            deps: oldest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -40,13 +36,6 @@ jobs:
             requirements.txt
             requirements-optional.txt
             requirements-test.txt
-      - if: ${{ matrix.deps == 'oldest' }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-          cache: pip
-          cache-dependency-path: |
-            requirements-oldest.txt
       - if: ${{ matrix.os == 'windows-latest' }}
         name: Determine environment name for Tox (PowerShell)
         run: python toxver.py ${{ matrix.python }} ${{ matrix.deps }} >> $env:GITHUB_ENV

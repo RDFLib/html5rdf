@@ -12,7 +12,6 @@ _root = os.path.join(_dir, "..", "..")
 _testdata = os.path.join(_dir, "testdata")
 _tree_construction = os.path.join(_testdata, "tree-construction")
 _tokenizer = os.path.join(_testdata, "tokenizer")
-_sanitizer_testdata = os.path.join(_dir, "sanitizer-testdata")
 
 
 def fail_if_missing_pytest_expect():

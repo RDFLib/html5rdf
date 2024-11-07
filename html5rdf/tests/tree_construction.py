@@ -196,10 +196,10 @@ class TreeWalkerTest(pytest.Item):
         except NotImplementedError:
             pytest.skip("tree walker NotImplementedError")
 
-    def repr_failure(self, excinfo):
+    def repr_failure(self, excinfo: "pytest._code.code.ExceptionInfo[BaseException]", *args):
         traceback = excinfo.traceback
         ntraceback = traceback.cut(path=__file__)
-        excinfo.traceback = ntraceback.filter()
+        excinfo.traceback = ntraceback.filter(excinfo)
 
         return excinfo.getrepr(funcargs=True,
                                showlocals=False,
